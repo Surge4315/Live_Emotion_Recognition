@@ -1,5 +1,11 @@
-import cv2
+#suppress all warnings and useless logs so can stream smoothly emotions to games
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # only show error and above
+import logging
+logging.getLogger('tensorflow').setLevel(logging.ERROR)  # suppress Python logging warnings
+
 from deepface import DeepFace
+import cv2
 import numpy as np
 
 cap = cv2.VideoCapture(0)
@@ -9,6 +15,8 @@ cv2.setWindowProperty("LIVE STUDENCIAK REACTION",
                       cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_GUI_EXPANDED)
 
 panel_width = 250  # side panel width
+
+print("START")
 
 while True:
     ret, frame = cap.read()
@@ -87,6 +95,7 @@ while True:
     # camera + side panel
     frame = np.hstack((frame, panel))
     cv2.imshow("LIVE STUDENCIAK REACTION", frame)
+    
 
     # press q to quit
     if cv2.waitKey(1) & 0xFF == ord('q'):
